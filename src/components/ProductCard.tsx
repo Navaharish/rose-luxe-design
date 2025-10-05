@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductCardProps {
   id: string;
@@ -13,6 +14,8 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ id, name, price, image, category, rating = 4.5 }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
   return (
     <Card className="card-elegant group overflow-hidden border-border/50">
       <Link to={`/product/${id}`}>
@@ -28,7 +31,6 @@ export const ProductCard = ({ id, name, price, image, category, rating = 4.5 }: 
             className="absolute top-4 right-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
             onClick={(e) => {
               e.preventDefault();
-              // Add to wishlist logic
             }}
           >
             <Heart className="h-4 w-4" />
@@ -60,9 +62,7 @@ export const ProductCard = ({ id, name, price, image, category, rating = 4.5 }: 
           <Button 
             size="icon" 
             className="rounded-full bg-primary hover:bg-primary/90"
-            onClick={() => {
-              // Add to cart logic
-            }}
+            onClick={() => addToCart(id)}
           >
             <ShoppingCart className="h-4 w-4" />
           </Button>

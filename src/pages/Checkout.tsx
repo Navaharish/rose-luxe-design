@@ -96,8 +96,12 @@ export default function Checkout() {
       
       const orderData = await orderResponse.json();
 
+      // Fetch Razorpay key from backend
+      const keyResponse = await fetch("/api/payment/razorpay-key");
+      const { key } = await keyResponse.json();
+
       const options = {
-        key: import.meta.env.RAZORPAY_KEY_ID || "rzp_live_ROz0SG1CcePViw",
+        key,
         amount: orderData.amount,
         currency: orderData.currency,
         name: "Enoormous Organic Products",

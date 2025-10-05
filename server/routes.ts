@@ -322,6 +322,14 @@ export function registerRoutes(app: Express) {
   });
 
   // Razorpay Payment
+  app.get("/api/payment/razorpay-key", async (req, res) => {
+    try {
+      res.json({ key: process.env.RAZORPAY_KEY_ID });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch Razorpay key" });
+    }
+  });
+
   app.post("/api/payment/create-order", async (req, res) => {
     try {
       const Razorpay = (await import("razorpay")).default;
@@ -360,12 +368,29 @@ export function registerRoutes(app: Express) {
       if (razorpay_signature === expectedSign) {
         // Payment verified successfully, create order in database
         if (order_data) {
+          // Get cart items before clearing
+          const cartItems = await storage.getCartItems(order_data.userId);
+          
+          // Create the order
           const order = await storage.createOrder({
             ...order_data,
             paymentId: razorpay_payment_id,
             paymentStatus: "completed",
             status: "confirmed",
           });
+          
+          // Create order items from cart
+          for (const cartItem of cartItems) {
+            const product = await storage.getProduct(cartItem.productId);
+            if (product) {
+              await storage.createOrderItem({
+                orderId: order.id,
+                productId: cartItem.productId,
+                quantity: cartItem.quantity,
+                price: product.price,
+              });
+            }
+          }
           
           // Clear cart after successful order
           await storage.clearCart(order_data.userId);

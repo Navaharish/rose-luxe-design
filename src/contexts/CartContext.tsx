@@ -3,7 +3,7 @@ import { api } from "@/lib/api";
 import type { CartItem, Product } from "@shared/schema";
 import { toast } from "sonner";
 
-const TEMP_USER_ID = "00000000-0000-0000-0000-000000000000";
+export const TEMP_USER_ID = "00000000-0000-0000-0000-000000000001";
 
 interface CartContextType {
   cartItems: CartItem[];
@@ -32,10 +32,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const productIds = items.map(item => item.productId);
       const productMap = new Map<string, Product>();
       
-      for (const id of productIds) {
-        const product = await api.products.getById(id);
-        productMap.set(id, product);
-      }
+      // Batch fetch all products in parallel
+      const productPromises = productIds.map(id => api.products.getById(id));
+      const productsArray = await Promise.all(productPromises);
+      
+      productsArray.forEach((product, index) => {
+        productMap.set(productIds[index], product);
+      });
       
       setProducts(productMap);
     } catch (error) {
@@ -143,5 +146,3 @@ export function useCart() {
   }
   return context;
 }
-
-export { TEMP_USER_ID };

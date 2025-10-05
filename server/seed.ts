@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { products } from "@shared/schema";
+import { products, profiles } from "@shared/schema";
 
 const seedProducts = [
   {
@@ -111,6 +111,15 @@ const seedProducts = [
 async function seed() {
   try {
     console.log("Starting database seed...");
+    
+    // Create temp user profile for cart functionality
+    await db.insert(profiles).values({
+      id: "00000000-0000-0000-0000-000000000001",
+      email: "temp@enoormous.com",
+      fullName: "Guest User",
+      phone: null,
+    }).onConflictDoNothing();
+    console.log("✓ Created temp user profile");
     
     for (const product of seedProducts) {
       await db.insert(products).values(product).onConflictDoNothing();

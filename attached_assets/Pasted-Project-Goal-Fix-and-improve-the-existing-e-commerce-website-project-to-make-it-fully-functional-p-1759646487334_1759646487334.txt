@@ -1,0 +1,108 @@
+Project Goal:
+Fix and improve the existing e-commerce website project to make it fully functional, production-ready, and easy for other developers to understand and maintain.
+
+✅ Tasks & Requirements
+
+Cart Section Fixes
+
+Debug and fix the cart functionality so users can:
+
+Add products to cart
+
+Remove products
+
+Update quantity
+
+View total price correctly
+
+Ensure data persists between sessions using the backend (no data loss).
+
+Product Detail Page
+
+Add an individual product view page.
+
+Display detailed product descriptions, images, and pricing for each product.
+
+Ensure the “View Product” or “More Details” button navigates correctly to this page.
+
+Backend Integration
+
+Connect the frontend (Next.js or other) with the backend (Express.js or chosen framework).
+
+Ensure all cart and product data are fetched dynamically from the backend.
+
+Maintain data persistence across user sessions.
+
+Handle errors gracefully with proper validation and responses.
+
+Payment Gateway (Razorpay)
+
+Integrate Razorpay for secure payment processing.
+
+Create a backend route for initiating payments.
+
+Add clear instructions in the README about:
+
+Where to place Razorpay API keys
+
+How to configure environment variables (e.g., .env file)
+
+Ensure successful payment redirects and error handling are tested.
+
+Documentation (README.md)
+
+Update the README file with:
+
+Full explanation of what changes were made and why
+
+Detailed folder structure (what each file/folder does)
+
+Backend and frontend setup steps
+
+Instructions for adding new features
+
+Razorpay setup guide with placeholder keys
+
+Deployment instructions for production
+
+Update the README every time new changes are made.
+
+Code Quality & Error-Free Build
+
+Ensure no console or runtime errors.
+
+Optimize for production build (minify, remove unused code, configure environment properly).
+
+Test all features:
+
+Add to cart
+
+Checkout
+
+Payment
+
+Product details
+
+Data persistence
+
+Ensure the app works smoothly on both desktop and mobile.
+
+Additional Notes
+
+Follow the Lovable plan (attached reference) where applicable.
+
+Maintain clean, modular, and commented code.
+
+Prioritize scalability and maintainability.
+
+💡 Deliverables
+
+Fully functional, production-ready e-commerce web app
+
+Complete and updated README.md file
+
+Error-free, optimized backend and frontend
+
+Working Razorpay integration
+
+Well-structured and explained project ready for deployment
